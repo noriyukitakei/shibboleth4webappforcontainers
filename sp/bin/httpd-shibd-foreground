@@ -1,0 +1,11 @@
+#!/bin/bash
+
+# IdPのメタデータを取得する。$IDP_HOSTは環境変数にてIdPのホスト名を設定する。
+curl -k https://$IDP_HOST/idp/shibboleth > /etc/shibboleth/partner-metadata.xml
+
+# Shibboleth SPを起動する。
+chmod +x /etc/shibboleth/shibd-redhat
+/etc/shibboleth/shibd-redhat start
+
+# Apacheを起動する。
+exec httpd -DFOREGROUND
